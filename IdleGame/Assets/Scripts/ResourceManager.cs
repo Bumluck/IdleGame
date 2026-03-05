@@ -1,12 +1,22 @@
+using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Numerics;
 
 public class ResourceManager : MonoBehaviour
 {
 
     #region VARIABLES
 
-    private int viewModifier;
-    private string views;
+    [Header("Views Stuff")]
+    [SerializeField] private uint viewModifier;
+    [SerializeField] private string viewString;
+    [SerializeField] private BigInteger views;
+
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshProUGUI viewsUI;
 
     public static ResourceManager Instance;
 
@@ -55,21 +65,40 @@ public class ResourceManager : MonoBehaviour
     private void ViewCycle()
     //-------------------//
     {
+        uint addAmount;
+
+
+
 
     }
 
     //-----------------------------//
-    public void AddViews(int _views)
+    public void AddViews(uint _views)
     //-----------------------------//
     {
         views += _views;
+        UpdateViewUI();
     }
 
     #endregion
 
     #region UI FUNCTIONS
 
+    //--------------------------------------//
+    public void UpdateViewUI()
+    //--------------------------------------//
+    {
+        viewString = views.ToString();
+        viewsUI.text = "Views: " + viewString;
+    }
 
+    #endregion
+
+    #region DATA MANAGEMENT
+
+    //Add method to create a new list entry when the player gets a total views above the sizeof(ulong)
+
+    //Saving and Loading code to PlayerPrefs, full save and load seems overkill for now
 
     #endregion
 
