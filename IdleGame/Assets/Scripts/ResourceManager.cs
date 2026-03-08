@@ -3,22 +3,24 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
-using System.Numerics;
+using BreakInfinity;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : MonoBehaviour, ISaveable
 {
 
     #region VARIABLES
 
     [Header("Views Stuff")]
-    [SerializeField] private uint viewModifier;
+    [SerializeField] private float viewModifier;
     [SerializeField] private string viewString;
-    [SerializeField] private BigInteger views;
+    [SerializeField] private double views;
+    [SerializeField] private uint exponent;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI viewsUI;
 
     public static ResourceManager Instance;
+    private DataManager dataManager;
 
     #endregion
 
@@ -38,18 +40,17 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        dataManager = DataManager.Instance;
+        DataManager.Instance.saveableObjects.Add(this)  ;
+    }
+
     //--------//
     void Start()
     //--------//
     {
-        if (Instance != this && Instance != null)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
+
     }
 
     private void Update()
@@ -65,7 +66,6 @@ public class ResourceManager : MonoBehaviour
     private void ViewCycle()
     //-------------------//
     {
-        uint addAmount;
 
 
 
@@ -76,8 +76,11 @@ public class ResourceManager : MonoBehaviour
     public void AddViews(uint _views)
     //-----------------------------//
     {
-        views += _views;
-        UpdateViewUI();
+        if (!(_views / views < .1) || views == 0)
+        {
+            views = BigDouble.Add(views, _views).ToDouble();
+            UpdateViewUI();
+        }
     }
 
     #endregion
@@ -88,17 +91,43 @@ public class ResourceManager : MonoBehaviour
     public void UpdateViewUI()
     //--------------------------------------//
     {
-        viewString = views.ToString();
+        viewString = ConvertToString(views);
         viewsUI.text = "Views: " + viewString;
+    }
+
+    #endregion
+
+    #region EXPONENT FUNCTIONS
+
+    private string ConvertToString(BigDouble _int, double _exponent)
+    {
+        string num;
+        num = BigDouble.Pow(_int, exponent).ToString("F0");
+        return num;
     }
 
     #endregion
 
     #region DATA MANAGEMENT
 
-    //Add method to create a new list entry when the player gets a total views above the sizeof(ulong)
+    public void LoadVariables()
+    {
+        views = dataManager.data.views;
+        viewModifier = dataManager.data.viewModifier;
 
-    //Saving and Loading code to PlayerPrefs, full save and load seems overkill for now
+        InitializeData();
+    }
+
+    public void SaveVariables()
+    {
+        dataManager.data.views = views;
+        dataManager.data.viewModifier = viewModifier;
+    }
+
+    private void InitializeData()
+    {
+        UpdateViewUI();
+    }
 
     #endregion
 

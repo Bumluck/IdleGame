@@ -1,12 +1,19 @@
 using UnityEngine;
 using System;
-using System.Numerics;
+using BreakInfinity;
 
 [System.Serializable]
 public class GameData
 {
-    public BigInteger views;
-    private uint viewsModifier;
+    public uint exponent;
+    public BigDouble views;
+    public float viewModifier;
 
+    public GameData()
+    {
+        exponent = 0;
+        views = 0;
+        viewModifier = 1;
+    }
 
 }

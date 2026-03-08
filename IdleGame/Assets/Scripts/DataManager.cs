@@ -1,42 +1,92 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+
+public interface ISaveable
+{
+    public void LoadVariables();
+    public void SaveVariables();
+}
+
 
 public class DataManager : MonoBehaviour
 {
     #region VARIABLES
 
     private const string GameDataKey = "GameData";
-
     public static DataManager Instance;
+
+    [Header("Current Data from PlayerPrefs - DOES NOT REFLECT REALTIME DATA")]
+    public GameData data;
+
+    public List<ISaveable> saveableObjects;
 
     #endregion
 
     #region MONOBEHAVIOUR FUNCTIONS
 
-    private void Start()
+    private void Awake()
     {
-        if (Instance == null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
             Instance = this;
+            data = LoadData();
+            saveableObjects = new List<ISaveable>();
+        }
+    }
+
+    private void Start()
+    {
+        Debug.Log(saveableObjects.Count);
+        PassDataToObjects();
+    }
+
+    void OnApplicationQuit()
+    {
+        GetDataFromObjects();
+        SaveData(data);
+    }
+
+    #endregion
+
+    #region CALL ISAVEABLE FUNCTIONS
+
+    private void PassDataToObjects()
+    {
+        Debug.LogWarning("Beginning to pass data to objects...");
+        foreach (ISaveable s in saveableObjects)
+        {
+            s.LoadVariables();
+        }
+    }
+
+    private void GetDataFromObjects()
+    {
+        Debug.LogWarning("Beginning to get data from objects...");
+        foreach (ISaveable s in saveableObjects)
+        {
+            s.SaveVariables();
         }
     }
 
     #endregion
 
-    #region DATA MANAGEMENT
+    #region DATA DISK MANAGEMENT
 
     public void SaveData(GameData data)
     {
-        if (data != null)
+        if (data == null)
         {
             Debug.LogError("The data you are trying to save is null");
             return;
         }
-        
+        Debug.Log("data is not null, attempting to save");
         string json = JsonUtility.ToJson(data);
         PlayerPrefs.SetString(GameDataKey, json);
         PlayerPrefs.Save();
@@ -44,13 +94,16 @@ public class DataManager : MonoBehaviour
 
     public GameData LoadData()
     {
+        GameData data;
         if (!PlayerPrefs.HasKey(GameDataKey))
         {
-            Debug.LogWarning("No saved game data found...");
+            Debug.LogWarning("No saved game data found creating new save game data...");
+            data = new GameData();
+            return data;
         }
 
         string json = PlayerPrefs.GetString(GameDataKey);
-        GameData data = JsonUtility.FromJson<GameData>(json);
+        data = JsonUtility.FromJson<GameData>(json);
 
         return data;
     }
