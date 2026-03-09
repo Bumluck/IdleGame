@@ -13,14 +13,14 @@ public class ResourceManager : MonoBehaviour, ISaveable
     [Header("Views Stuff")]
     [SerializeField] private float viewModifier;
     [SerializeField] private string viewString;
-    [SerializeField] private double views;
-    [SerializeField] private uint exponent;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI viewsUI;
 
+    [SerializeField] public Dictionary<string, BigDouble> resourceList;
     public static ResourceManager Instance;
     private DataManager dataManager;
+    private ShopManager shopManager;
 
     #endregion
 
@@ -42,20 +42,21 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     private void OnEnable()
     {
-        dataManager = DataManager.Instance;
-        DataManager.Instance.saveableObjects.Add(this)  ;
+
     }
 
     //--------//
     void Start()
     //--------//
     {
-
+        dataManager = DataManager.Instance;
+        shopManager = ShopManager.Instance;
+        DataManager.Instance.saveableObjects.Add(Instance);
     }
 
     private void Update()
     {
-
+        ViewCycle();
     }
 
     #endregion
@@ -66,21 +67,16 @@ public class ResourceManager : MonoBehaviour, ISaveable
     private void ViewCycle()
     //-------------------//
     {
-
-
-
-
+        resourceList["views"] += resourceList["viewRate"];
+        UpdateViewUI();
     }
 
     //-----------------------------//
-    public void AddViews(uint _views)
+    public void AddViews(BigDouble _views)
     //-----------------------------//
     {
-        if (!(_views / views < .1) || views == 0)
-        {
-            views = BigDouble.Add(views, _views).ToDouble();
-            UpdateViewUI();
-        }
+        resourceList["views"] = BigDouble.Add(resourceList["views"], _views).ToDouble();
+        UpdateViewUI();
     }
 
     #endregion
@@ -91,7 +87,7 @@ public class ResourceManager : MonoBehaviour, ISaveable
     public void UpdateViewUI()
     //--------------------------------------//
     {
-        viewString = ConvertToString(views);
+        viewString = BigDoubleToString(resourceList["views"]);
         viewsUI.text = "Views: " + viewString;
     }
 
@@ -99,10 +95,10 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     #region EXPONENT FUNCTIONS
 
-    private string ConvertToString(BigDouble _int, double _exponent)
+    private string BigDoubleToString(BigDouble _int)
     {
         string num;
-        num = BigDouble.Pow(_int, exponent).ToString("F0");
+        num = _int.ToString("F0");
         return num;
     }
 
@@ -112,7 +108,7 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     public void LoadVariables()
     {
-        views = dataManager.data.views;
+        resourceList = dataManager.data.resourceList;
         viewModifier = dataManager.data.viewModifier;
 
         InitializeData();
@@ -120,7 +116,7 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     public void SaveVariables()
     {
-        dataManager.data.views = views;
+        dataManager.data.resourceList = resourceList;
         dataManager.data.viewModifier = viewModifier;
     }
 

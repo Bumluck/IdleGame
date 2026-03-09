@@ -38,13 +38,13 @@ public class DataManager : MonoBehaviour
             Instance = this;
             data = LoadData();
             saveableObjects = new List<ISaveable>();
+            Debug.Log("Saveable List created");
         }
     }
 
     private void Start()
     {
-        Debug.Log(saveableObjects.Count);
-        PassDataToObjects();
+        StartCoroutine(PassDataToObjects());
     }
 
     void OnApplicationQuit()
@@ -57,13 +57,16 @@ public class DataManager : MonoBehaviour
 
     #region CALL ISAVEABLE FUNCTIONS
 
-    private void PassDataToObjects()
+    private IEnumerator PassDataToObjects()
     {
+        yield return new WaitForSeconds(.5f);
+        Debug.Log(saveableObjects.Count);
         Debug.LogWarning("Beginning to pass data to objects...");
         foreach (ISaveable s in saveableObjects)
         {
             s.LoadVariables();
         }
+        yield return null;
     }
 
     private void GetDataFromObjects()
@@ -95,7 +98,7 @@ public class DataManager : MonoBehaviour
     public GameData LoadData()
     {
         GameData data;
-        if (!PlayerPrefs.HasKey(GameDataKey))
+        /*if (!PlayerPrefs.HasKey(GameDataKey))
         {
             Debug.LogWarning("No saved game data found creating new save game data...");
             data = new GameData();
@@ -105,6 +108,10 @@ public class DataManager : MonoBehaviour
         string json = PlayerPrefs.GetString(GameDataKey);
         data = JsonUtility.FromJson<GameData>(json);
 
+        return data;*/
+
+
+        data = new GameData();
         return data;
     }
 

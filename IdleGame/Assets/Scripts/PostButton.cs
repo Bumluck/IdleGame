@@ -2,8 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PostButton : MonoBehaviour
 {
-    public void OnPostButtonPress(int addAmount)
+
+    public int buttonAdd;
+
+    public void OnPostButtonPress()
     {
-        ResourceManager.Instance.AddViews((uint)addAmount);
+        ResourceManager.Instance.AddViews(buttonAdd);
     }
 }

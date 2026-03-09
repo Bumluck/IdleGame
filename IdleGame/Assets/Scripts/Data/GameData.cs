@@ -1,19 +1,22 @@
 using UnityEngine;
 using System;
 using BreakInfinity;
+using System.Collections.Generic;
+using System.Collections;
 
 [System.Serializable]
 public class GameData
 {
-    public uint exponent;
-    public BigDouble views;
     public float viewModifier;
-
+    public Dictionary<string, BigDouble> resourceList;
     public GameData()
     {
-        exponent = 0;
-        views = 0;
         viewModifier = 1;
+        resourceList = new Dictionary<string, BigDouble>();
+        resourceList["views"] = 0;
+        resourceList["viewRate"] = 0;
+        resourceList["money"] = 0;
+        resourceList["adrev"] = 0;
     }
 
 }
