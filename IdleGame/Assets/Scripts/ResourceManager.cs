@@ -52,6 +52,7 @@ public class ResourceManager : MonoBehaviour, ISaveable
         dataManager = DataManager.Instance;
         shopManager = ShopManager.Instance;
         DataManager.Instance.saveableObjects.Add(Instance);
+        resourceList = new Dictionary<string, BigDouble>();
     }
 
     private void Update()
@@ -70,12 +71,12 @@ public class ResourceManager : MonoBehaviour, ISaveable
         resourceList["views"] += resourceList["viewRate"];
         UpdateViewUI();
     }
-
+    
     //-----------------------------//
     public void AddViews(BigDouble _views)
     //-----------------------------//
     {
-        resourceList["views"] = BigDouble.Add(resourceList["views"], _views).ToDouble();
+        resourceList["views"] = BigDouble.Add(resourceList["views"], _views);
         UpdateViewUI();
     }
 
@@ -108,16 +109,26 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     public void LoadVariables()
     {
-        resourceList = dataManager.data.resourceList;
+        /*
+        foreach(KeyValuePair<string, string> kv in dataManager.data.resourceList)
+        {
+            resourceList[kv.Key] = BigDouble.Parse(kv.Value);
+        }
         viewModifier = dataManager.data.viewModifier;
 
         InitializeData();
+        */
     }
 
     public void SaveVariables()
     {
-        dataManager.data.resourceList = resourceList;
+        /*
+         * foreach (KeyValuePair<string, BigDouble> kv in resourceList)
+        {
+            dataManager.data.resourceList[kv.Key] = kv.Value.ToString("F0");
+        }
         dataManager.data.viewModifier = viewModifier;
+        */
     }
 
     private void InitializeData()

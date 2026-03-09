@@ -8,15 +8,19 @@ using System.Collections;
 public class GameData
 {
     public float viewModifier;
-    public Dictionary<string, BigDouble> resourceList;
+    public string views;
+    public string viewRate;
+    public string money;
+    public string adrev;
+    public string buttonAdd;
     public GameData()
     {
         viewModifier = 1;
-        resourceList = new Dictionary<string, BigDouble>();
-        resourceList["views"] = 0;
-        resourceList["viewRate"] = 0;
-        resourceList["money"] = 0;
-        resourceList["adrev"] = 0;
+        views = "0";
+        viewRate = "0";
+        money = "0";
+        adrev = "0";
+        buttonAdd = "1";
     }
 
 }

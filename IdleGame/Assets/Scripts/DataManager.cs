@@ -98,7 +98,7 @@ public class DataManager : MonoBehaviour
     public GameData LoadData()
     {
         GameData data;
-        /*if (!PlayerPrefs.HasKey(GameDataKey))
+        if (!PlayerPrefs.HasKey(GameDataKey))
         {
             Debug.LogWarning("No saved game data found creating new save game data...");
             data = new GameData();
@@ -107,12 +107,12 @@ public class DataManager : MonoBehaviour
 
         string json = PlayerPrefs.GetString(GameDataKey);
         data = JsonUtility.FromJson<GameData>(json);
-
-        return data;*/
-
-
-        data = new GameData();
+        Debug.Log(PlayerPrefs.HasKey(GameDataKey));
         return data;
+
+
+        //data = new GameData();
+        //return data;
     }
 
     #endregion
