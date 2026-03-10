@@ -109,26 +109,23 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     public void LoadVariables()
     {
-        /*
-        foreach(KeyValuePair<string, string> kv in dataManager.data.resourceList)
-        {
-            resourceList[kv.Key] = BigDouble.Parse(kv.Value);
-        }
+        resourceList["views"] = BigDouble.Parse(dataManager.data.views);
+        resourceList["viewRate"] = BigDouble.Parse(dataManager.data.viewRate);
+        resourceList["money"] = BigDouble.Parse(dataManager.data.money);
+        resourceList["adrev"] = BigDouble.Parse(dataManager.data.adrev);
         viewModifier = dataManager.data.viewModifier;
 
         InitializeData();
-        */
+        
     }
 
     public void SaveVariables()
     {
-        /*
-         * foreach (KeyValuePair<string, BigDouble> kv in resourceList)
-        {
-            dataManager.data.resourceList[kv.Key] = kv.Value.ToString("F0");
-        }
+        dataManager.data.views = resourceList["views"].ToString("F0");
+        dataManager.data.viewRate = resourceList["viewRate"].ToString("F0");
+        dataManager.data.money = resourceList["money"].ToString("F0");
+        dataManager.data.adrev = resourceList["adrev"].ToString("F0");
         dataManager.data.viewModifier = viewModifier;
-        */
     }
 
     private void InitializeData()

@@ -16,10 +16,14 @@ public class GameData
     public GameData()
     {
         viewModifier = 1;
+
+        //ResourceManager
         views = "0";
         viewRate = "0";
         money = "0";
         adrev = "0";
+
+        //PostButton
         buttonAdd = "1";
     }
 

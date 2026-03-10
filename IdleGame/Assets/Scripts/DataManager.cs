@@ -59,7 +59,7 @@ public class DataManager : MonoBehaviour
 
     private IEnumerator PassDataToObjects()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         Debug.Log(saveableObjects.Count);
         Debug.LogWarning("Beginning to pass data to objects...");
         foreach (ISaveable s in saveableObjects)

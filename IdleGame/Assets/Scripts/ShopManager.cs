@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BreakInfinity;
+using TMPro;
+using UnityEngine.UI;
 
 public class ShopManager : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class ShopManager : MonoBehaviour
     #region VARIABLES
 
     public List<ItemData> itemList;
+    public List<Button> buttonList;
     private DataManager dataManager;
     private ResourceManager resourceManager;
 
@@ -34,7 +37,7 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         dataManager = DataManager.Instance;
-        resourceManager = ResourceManager.Instance;
+        resourceManager = ResourceManager.Instance; 
     }
 
     #endregion
