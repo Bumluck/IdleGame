@@ -6,13 +6,14 @@ using BreakInfinity;
 using TMPro;
 using UnityEngine.UI;
 
-public class ShopManager : MonoBehaviour
+public class ShopManager : MonoBehaviour, ISaveable
 {
 
     #region VARIABLES
 
     public List<ItemData> itemList;
     public List<Button> buttonList;
+    public List<TextMeshProUGUI> itemAmountTextList;
     private DataManager dataManager;
     private ResourceManager resourceManager;
 
@@ -37,10 +38,13 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         dataManager = DataManager.Instance;
-        resourceManager = ResourceManager.Instance; 
+        resourceManager = ResourceManager.Instance;
+        dataManager.saveableObjects.Add(this);
     }
 
     #endregion
+
+    #region SHOP FUNCTIONS
 
     public void UpdateViewRate()
     {
@@ -52,16 +56,36 @@ public class ShopManager : MonoBehaviour
         resourceManager.resourceList["viewRate"] = newviewRate;
     }
 
-
     public void PurchaseItem(int _itemId)
     {
         if (resourceManager.resourceList["views"] >= itemList[_itemId].cost)
         {
             resourceManager.resourceList["views"] -= itemList[_itemId].cost;
-            itemList[_itemId].cost = itemList[_itemId].costMultiplier;
+            itemList[_itemId].cost *= itemList[_itemId].costMultiplier;
+            itemList[_itemId].cost = itemList[_itemId].cost.Floor();
             itemList[_itemId].amount++;
+            //itemAmountTextList[_itemId].text = itemList[_itemId].amount.ToString("F0");
+            resourceManager.UpdateViewUI();
             UpdateViewRate();
         }
     }
+
+    #endregion
+
+    #region ISAVEABLE FUNCTIONS
+
+    public void LoadVariables()
+    {
+        itemList[0].amount = BigDouble.Parse(dataManager.data.catAmount);
+        itemList[0].cost = BigDouble.Parse(dataManager.data.catCost);
+    }
+
+    public void SaveVariables()
+    {
+        dataManager.data.catAmount = itemList[0].amount.ToString("F0");
+        dataManager.data.catCost = itemList[0].cost.ToString("F0");
+    }
+
+    #endregion
 
 }

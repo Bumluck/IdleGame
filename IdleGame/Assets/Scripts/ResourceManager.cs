@@ -18,6 +18,9 @@ public class ResourceManager : MonoBehaviour, ISaveable
     [SerializeField] private TextMeshProUGUI viewsUI;
 
     [SerializeField] public Dictionary<string, BigDouble> resourceList;
+
+    public float timer;
+
     public static ResourceManager Instance;
     private DataManager dataManager;
     private ShopManager shopManager;
@@ -57,7 +60,12 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     private void Update()
     {
-        ViewCycle();
+        timer += Time.deltaTime;
+        if (timer >= 1)
+        {
+            ViewCycle();
+            timer = 0f;
+        }
     }
 
     #endregion
