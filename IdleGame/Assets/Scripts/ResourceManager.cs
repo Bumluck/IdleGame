@@ -60,6 +60,7 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     private void Update()
     {
+        //Run ViewCycle() every second
         timer += Time.deltaTime;
         if (timer >= 1)
         {

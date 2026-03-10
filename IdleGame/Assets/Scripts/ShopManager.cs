@@ -13,7 +13,6 @@ public class ShopManager : MonoBehaviour, ISaveable
 
     public List<ItemData> itemList;
     public List<Button> buttonList;
-    public List<TextMeshProUGUI> itemAmountTextList;
     private DataManager dataManager;
     private ResourceManager resourceManager;
 
@@ -40,6 +39,7 @@ public class ShopManager : MonoBehaviour, ISaveable
         dataManager = DataManager.Instance;
         resourceManager = ResourceManager.Instance;
         dataManager.saveableObjects.Add(this);
+        SetItemUI();
     }
 
     #endregion
@@ -67,6 +67,20 @@ public class ShopManager : MonoBehaviour, ISaveable
             //itemAmountTextList[_itemId].text = itemList[_itemId].amount.ToString("F0");
             resourceManager.UpdateViewUI();
             UpdateViewRate();
+        }
+    }
+
+    #endregion
+
+    #region ITEM UI FUNCTIONS
+
+    private void SetItemUI()
+    {
+        foreach(ItemData i in itemList)
+        {
+            ItemButton currentButton = buttonList[itemList.IndexOf(i)].GetComponent<ItemButton>();
+            currentButton.itemTitle.text = i.itemTitle;
+            currentButton.itemDescription.text = i.itemDescription;
         }
     }
 

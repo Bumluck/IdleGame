@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ItemButton : MonoBehaviour
 {
@@ -7,6 +9,9 @@ public class ItemButton : MonoBehaviour
 
     private ShopManager shopManager;
 
+    public TextMeshProUGUI itemTitle;
+    public TextMeshProUGUI itemDescription;
+    public TextMeshProUGUI itemAmount;
 
     #endregion
 
@@ -24,6 +29,12 @@ public class ItemButton : MonoBehaviour
     public void BuyItem(int _itemId)
     {
         shopManager.PurchaseItem(_itemId);
+        IncItemAmountUI(_itemId);
+    }
+
+    public void IncItemAmountUI(int _itemId)
+    {
+        itemAmount.text = (shopManager.itemList[_itemId].amount + 1).ToString("F0");
     }
 
     #endregion
