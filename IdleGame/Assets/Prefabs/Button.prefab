@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 225477839883665083}
   - component: {fileID: 5892673826421240430}
   - component: {fileID: 5965300917194531920}
+  - component: {fileID: 3516325799527572751}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -563,3 +564,15 @@ MonoBehaviour:
   itemTitle: {fileID: 4817216839997424851}
   itemDescription: {fileID: 2433718549642859993}
   itemAmount: {fileID: 640198312816428354}
+--- !u!225 &3516325799527572751
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8525684665048252283}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

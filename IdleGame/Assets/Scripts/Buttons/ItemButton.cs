@@ -34,7 +34,7 @@ public class ItemButton : MonoBehaviour
 
     public void IncItemAmountUI(int _itemId)
     {
-        itemAmount.text = (shopManager.itemList[_itemId].amount + 1).ToString("F0");
+        itemAmount.text = (shopManager.itemList[_itemId].amount).ToString("F0");
     }
 
     #endregion

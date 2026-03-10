@@ -39,7 +39,6 @@ public class ShopManager : MonoBehaviour, ISaveable
         dataManager = DataManager.Instance;
         resourceManager = ResourceManager.Instance;
         dataManager.saveableObjects.Add(this);
-        SetItemUI();
     }
 
     #endregion
@@ -81,6 +80,7 @@ public class ShopManager : MonoBehaviour, ISaveable
             ItemButton currentButton = buttonList[itemList.IndexOf(i)].GetComponent<ItemButton>();
             currentButton.itemTitle.text = i.itemTitle;
             currentButton.itemDescription.text = i.itemDescription;
+            currentButton.itemAmount.text = i.amount.ToString("F0");
         }
     }
 
@@ -92,12 +92,31 @@ public class ShopManager : MonoBehaviour, ISaveable
     {
         itemList[0].amount = BigDouble.Parse(dataManager.data.catAmount);
         itemList[0].cost = BigDouble.Parse(dataManager.data.catCost);
+        itemList[1].amount = BigDouble.Parse(dataManager.data.foodAmount);
+        itemList[1].cost = BigDouble.Parse(dataManager.data.foodCost);
+        itemList[2].amount = BigDouble.Parse(dataManager.data.memeAmount);
+        itemList[2].cost = BigDouble.Parse(dataManager.data.memeCost);
+        itemList[3].amount = BigDouble.Parse(dataManager.data.videogameAmount);
+        itemList[3].cost = BigDouble.Parse(dataManager.data.videogameCost);
+
+        InitializeData();
     }
 
     public void SaveVariables()
     {
         dataManager.data.catAmount = itemList[0].amount.ToString("F0");
         dataManager.data.catCost = itemList[0].cost.ToString("F0");
+        dataManager.data.foodAmount = itemList[1].amount.ToString("F0");
+        dataManager.data.foodCost = itemList[1].cost.ToString("F0");
+        dataManager.data.memeAmount = itemList[2].amount.ToString("F0");
+        dataManager.data.memeCost = itemList[2].cost.ToString("F0");
+        dataManager.data.videogameAmount = itemList[3].amount.ToString("F0");
+        dataManager.data.videogameCost = itemList[3].cost.ToString("F0");
+    }
+
+    public void InitializeData()
+    {
+        SetItemUI();
     }
 
     #endregion

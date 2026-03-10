@@ -20,6 +20,12 @@ public class GameData
     //ShopManager
     public string catAmount;
     public string catCost;
+    public string foodAmount;
+    public string foodCost;
+    public string memeAmount;
+    public string memeCost;
+    public string videogameAmount;
+    public string videogameCost;
 
     public GameData()
     {
@@ -38,7 +44,13 @@ public class GameData
         //ShopManager
         catAmount = "0";
         catCost = "25";
-
+        foodAmount = "0";
+        foodCost = "1000";
+        memeAmount = "0";
+        memeCost = "15000";
+        videogameAmount = "0";
+        videogameCost = "50000";
+        
     }
 
 }
