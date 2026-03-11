@@ -1,10 +1,18 @@
 using UnityEngine;
 using BreakInfinity;
 
-public enum UpgradeType
+public enum UpgradeState
 {
-    Modifier,
-    AddButton
+    Locked,
+    Available,
+    Purchased
+}
+
+public enum ResourceType
+{
+    Views,
+    PostButton,
+    AdRev
 }
 
 [System.Serializable]
@@ -12,10 +20,10 @@ public class UpgradeData
 {
     public string upgradeTitle;
     public string upgradeDescription;
-    public UpgradeType type;
+    public UpgradeState state;
+    public ResourceType type;
     public BigDouble cost;
-    public BigDouble addAmount;
-    public bool purchased;
+    public BigDouble effect;
 }
 
 [System.Serializable]
