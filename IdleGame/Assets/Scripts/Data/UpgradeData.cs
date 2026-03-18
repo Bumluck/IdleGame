@@ -8,6 +8,12 @@ public enum UpgradeState
     Purchased
 }
 
+public enum ItemState
+{
+    Locked,
+    Unlocked
+}
+
 public enum ResourceType
 {
     Views,
@@ -23,7 +29,7 @@ public class UpgradeData
     public UpgradeState state;
     public ResourceType type;
     public BigDouble cost;
-    public BigDouble effect;
+    public float effect;
 }
 
 [System.Serializable]
@@ -31,6 +37,7 @@ public class ItemData
 {
     public string itemTitle;
     public string itemDescription;
+    public ItemState state;
     public BigDouble cost;
     public BigDouble amount;
     public float costMultiplier;

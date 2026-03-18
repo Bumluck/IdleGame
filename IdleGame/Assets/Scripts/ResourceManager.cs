@@ -25,6 +25,8 @@ public class ResourceManager : MonoBehaviour, ISaveable
     private DataManager dataManager;
     private ShopManager shopManager;
 
+    private bool doneLoading;
+
     #endregion
 
     #region MONOBEHAVIOUR FUNCTIONS
@@ -40,12 +42,8 @@ public class ResourceManager : MonoBehaviour, ISaveable
         else
         {
             Instance = this;
+            doneLoading = false;
         }
-    }
-
-    private void OnEnable()
-    {
-
     }
 
     //--------//
@@ -64,8 +62,11 @@ public class ResourceManager : MonoBehaviour, ISaveable
         timer += Time.deltaTime;
         if (timer >= 1)
         {
-            ViewCycle();
-            timer = 0f;
+            if (doneLoading)
+            {
+                ViewCycle();
+                timer = 0f;
+            }
         }
     }
 
@@ -77,7 +78,7 @@ public class ResourceManager : MonoBehaviour, ISaveable
     private void ViewCycle()
     //-------------------//
     {
-        resourceList["views"] += resourceList["viewRate"];
+        resourceList["views"] += resourceList["viewRate"] * viewModifier;
         UpdateViewUI();
     }
     
@@ -91,25 +92,23 @@ public class ResourceManager : MonoBehaviour, ISaveable
 
     #endregion
 
+    #region MODIFIER FUNCTIONS
+
+    public void AddViewModifier(float _add)
+    {
+        viewModifier += _add;
+    }
+
+    #endregion
+
     #region UI FUNCTIONS
 
     //--------------------------------------//
     public void UpdateViewUI()
     //--------------------------------------//
     {
-        viewString = BigDoubleToString(resourceList["views"]);
+        viewString = resourceList["views"].ToString("F0");
         viewsUI.text = "Views: " + viewString;
-    }
-
-    #endregion
-
-    #region EXPONENT FUNCTIONS
-
-    private string BigDoubleToString(BigDouble _int)
-    {
-        string num;
-        num = _int.ToString("F0");
-        return num;
     }
 
     #endregion
@@ -140,6 +139,8 @@ public class ResourceManager : MonoBehaviour, ISaveable
     private void InitializeData()
     {
         UpdateViewUI();
+
+        doneLoading = true;
     }
 
     #endregion

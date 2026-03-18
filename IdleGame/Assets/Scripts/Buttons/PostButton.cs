@@ -6,21 +6,30 @@ public class PostButton : MonoBehaviour, ISaveable
     #region VARIABLES
 
     public BigDouble buttonAdd;
-
+    public float buttonMod;
     private DataManager dataManager;
+
+    public static PostButton Instance;
 
     #endregion
 
     public void OnPostButtonPress()
     {
-        ResourceManager.Instance.AddViews(buttonAdd);
+        ResourceManager.Instance.AddViews(buttonAdd * buttonMod);
     }
 
     #region MONOBEHAVIOUR FUNCTIONS
 
     private void Awake()
     {
-        buttonAdd = new BigDouble(1);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     private void Start()
@@ -31,12 +40,22 @@ public class PostButton : MonoBehaviour, ISaveable
 
     #endregion
 
+    #region ADD STATS
+
+    public void AddButtonMod(float _add)
+    {
+        buttonMod += _add;
+    }
+
+    #endregion
+
     #region ISAVEABLE FUNCTIONS
 
     public void LoadVariables()
     {
 
         buttonAdd = BigDouble.Parse(dataManager.data.buttonAdd);
+        buttonMod = float.Parse(dataManager.data.buttonMod);
 
     }
 
@@ -44,6 +63,7 @@ public class PostButton : MonoBehaviour, ISaveable
     {
 
         dataManager.data.buttonAdd = buttonAdd.ToString("F0");
+        dataManager.data.buttonMod = buttonMod.ToString();
 
     }
 

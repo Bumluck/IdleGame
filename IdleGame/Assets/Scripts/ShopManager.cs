@@ -41,6 +41,11 @@ public class ShopManager : MonoBehaviour, ISaveable
         dataManager.saveableObjects.Add(this);
     }
 
+    private void Update()
+    {
+        UnlockItem();
+    }
+
     #endregion
 
     #region SHOP FUNCTIONS
@@ -73,6 +78,21 @@ public class ShopManager : MonoBehaviour, ISaveable
 
     #region ITEM UI FUNCTIONS
 
+    private void UnlockItem()
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            CanvasGroup buttonCanGroup = buttonList[i].GetComponent<CanvasGroup>();
+            if ((itemList[i].state == ItemState.Locked && resourceManager.resourceList["views"] >= (itemList[i].cost * .25f) && i != 0) || (itemList[i].state == ItemState.Unlocked && buttonCanGroup.alpha != 1))
+            {
+                itemList[i].state = ItemState.Unlocked;
+
+                buttonCanGroup.alpha = 1;
+
+            }
+        }
+    }
+
     private void SetItemUI()
     {
         foreach(ItemData i in itemList)
@@ -81,6 +101,7 @@ public class ShopManager : MonoBehaviour, ISaveable
             currentButton.itemTitle.text = i.itemTitle;
             currentButton.itemDescription.text = i.itemDescription;
             currentButton.itemAmount.text = i.amount.ToString("F0");
+            currentButton.itemCost.text = "Cost: " + i.cost.ToString("F0");
         }
     }
 
@@ -94,10 +115,13 @@ public class ShopManager : MonoBehaviour, ISaveable
         itemList[0].cost = BigDouble.Parse(dataManager.data.catCost);
         itemList[1].amount = BigDouble.Parse(dataManager.data.foodAmount);
         itemList[1].cost = BigDouble.Parse(dataManager.data.foodCost);
+        itemList[1].state = (ItemState)dataManager.data.foodUnlocked;
         itemList[2].amount = BigDouble.Parse(dataManager.data.memeAmount);
         itemList[2].cost = BigDouble.Parse(dataManager.data.memeCost);
+        itemList[2].state = (ItemState)dataManager.data.memeUnlocked;
         itemList[3].amount = BigDouble.Parse(dataManager.data.videogameAmount);
         itemList[3].cost = BigDouble.Parse(dataManager.data.videogameCost);
+        itemList[3].state = (ItemState)dataManager.data.videogameUnlocked;
 
         InitializeData();
     }
@@ -108,10 +132,13 @@ public class ShopManager : MonoBehaviour, ISaveable
         dataManager.data.catCost = itemList[0].cost.ToString("F0");
         dataManager.data.foodAmount = itemList[1].amount.ToString("F0");
         dataManager.data.foodCost = itemList[1].cost.ToString("F0");
+        dataManager.data.foodUnlocked = (int)itemList[1].state;
         dataManager.data.memeAmount = itemList[2].amount.ToString("F0");
         dataManager.data.memeCost = itemList[2].cost.ToString("F0");
+        dataManager.data.memeUnlocked = (int)itemList[2].state;
         dataManager.data.videogameAmount = itemList[3].amount.ToString("F0");
         dataManager.data.videogameCost = itemList[3].cost.ToString("F0");
+        dataManager.data.videogameUnlocked = (int)itemList[3].state;
     }
 
     public void InitializeData()

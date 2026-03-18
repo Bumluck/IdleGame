@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3840584014549632174}
   - component: {fileID: 2433718549642859993}
   m_Layer: 5
-  m_Name: ItemDesc
+  m_Name: UpgradeDesc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &3769967674061081776
+--- !u!1 &2858367950280402264
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,23 +146,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 592565011430648190}
-  - component: {fileID: 4369064309241621439}
-  - component: {fileID: 640198312816428354}
+  - component: {fileID: 1964356170814285874}
+  - component: {fileID: 7914403421927283453}
+  - component: {fileID: 5804977372720751857}
   m_Layer: 5
-  m_Name: ItemAmount
+  m_Name: UpgradeCost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &592565011430648190
+--- !u!224 &1964356170814285874
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3769967674061081776}
+  m_GameObject: {fileID: 2858367950280402264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -172,24 +172,24 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 275, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: -75}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4369064309241621439
+--- !u!222 &7914403421927283453
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3769967674061081776}
+  m_GameObject: {fileID: 2858367950280402264}
   m_CullTransparentMesh: 1
---- !u!114 &640198312816428354
+--- !u!114 &5804977372720751857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3769967674061081776}
+  m_GameObject: {fileID: 2858367950280402264}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 25
+  m_text: 'Cost: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 2592415717400991616}
   - component: {fileID: 4817216839997424851}
   m_Layer: 5
-  m_Name: ItemTitle
+  m_Name: UpgradeTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,10 +424,10 @@ GameObject:
   - component: {fileID: 3237351532749019408}
   - component: {fileID: 225477839883665083}
   - component: {fileID: 5892673826421240430}
-  - component: {fileID: 5965300917194531920}
   - component: {fileID: 3516325799527572751}
+  - component: {fileID: 8275344879004603623}
   m_Layer: 5
-  m_Name: Button
+  m_Name: UpgradeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,7 +447,7 @@ RectTransform:
   m_Children:
   - {fileID: 2733640703704229109}
   - {fileID: 1825274050394949622}
-  - {fileID: 592565011430648190}
+  - {fileID: 1964356170814285874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -537,10 +537,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5965300917194531920}
-        m_TargetAssemblyTypeName: ItemButton, Assembly-CSharp
-        m_MethodName: BuyItem
-        m_Mode: 3
+      - m_Target: {fileID: 8275344879004603623}
+        m_TargetAssemblyTypeName: UpgradeButton, Assembly-CSharp
+        m_MethodName: BuyUpgrade
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -549,21 +549,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5965300917194531920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8525684665048252283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 435c753bc78c7e6428f12eae8cf92467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemButton
-  itemTitle: {fileID: 4817216839997424851}
-  itemDescription: {fileID: 2433718549642859993}
-  itemAmount: {fileID: 640198312816428354}
 --- !u!225 &3516325799527572751
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -576,3 +561,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &8275344879004603623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8525684665048252283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095539c59af23f443b51b4b9eb5d3b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeButton
+  upgradeId: 0
+  upgradeTitle: {fileID: 4817216839997424851}
+  upgradeDesc: {fileID: 2433718549642859993}
+  upgradeCost: {fileID: 5804977372720751857}

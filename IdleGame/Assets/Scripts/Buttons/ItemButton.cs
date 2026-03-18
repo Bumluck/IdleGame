@@ -12,6 +12,7 @@ public class ItemButton : MonoBehaviour
     public TextMeshProUGUI itemTitle;
     public TextMeshProUGUI itemDescription;
     public TextMeshProUGUI itemAmount;
+    public TextMeshProUGUI itemCost;
 
     #endregion
 
@@ -30,11 +31,17 @@ public class ItemButton : MonoBehaviour
     {
         shopManager.PurchaseItem(_itemId);
         IncItemAmountUI(_itemId);
+        ChangeItemCost(_itemId);
     }
 
     public void IncItemAmountUI(int _itemId)
     {
         itemAmount.text = (shopManager.itemList[_itemId].amount).ToString("F0");
+    }
+
+    public void ChangeItemCost(int _itemId)
+    {
+        itemCost.text = "Cost: " + (shopManager.itemList[_itemId].cost).ToString("F0");
     }
 
     #endregion
