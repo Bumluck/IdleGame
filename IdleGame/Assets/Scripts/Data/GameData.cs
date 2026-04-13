@@ -14,10 +14,6 @@ public class GameData
     public string money;
     public string adrev;
 
-    //PostButton
-    public string buttonAdd;
-    public string buttonMod;
-
     //ShopManager
     public string catAmount;
     public string catCost;
@@ -46,10 +42,6 @@ public class GameData
         money = "0";
         adrev = "0";
 
-        //PostButton
-        buttonAdd = "1";
-        buttonMod = "1";
-
         //ShopManager
         catAmount = "0";
         catCost = "25";
@@ -69,5 +61,6 @@ public class GameData
         smallAdState = 0;
 
     }
+
 
 }

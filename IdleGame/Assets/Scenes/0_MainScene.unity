@@ -1011,8 +1011,6 @@ MonoBehaviour:
     viewRate: 
     money: 
     adrev: 
-    buttonAdd: 
-    buttonMod: 1
     catAmount: 0
     catCost: 0
     foodAmount: 
@@ -1027,6 +1025,7 @@ MonoBehaviour:
     teenState: 0
     shortVidState: 0
     smallAdState: 0
+  postButton: {fileID: 475010043}
 --- !u!4 &588090749
 Transform:
   m_ObjectHideFlags: 0
