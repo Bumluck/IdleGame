@@ -149,32 +149,29 @@ public class DataManager : MonoBehaviour
 
     public void SaveData(GameData data)
     {
-        if (data == null)
+        try
         {
-            Debug.LogError("The data you are trying to save is null");
-            return;
-        }
-        Debug.Log("data is not null, attempting to save");
-        string json = JsonUtility.ToJson(data, true);
+            Debug.Log("data is not null, attempting to save");
+            string json = JsonUtility.ToJson(data, true);
 
-        using (StreamWriter stream = File.CreateText(_jsonGameData))
+            using (StreamWriter stream = File.CreateText(_jsonGameData))
+            {
+                stream.Write(json);
+            }
+        }
+        catch (Exception ex)
         {
-            stream.Write(json);
+            Type type = ex.GetType();
+            Debug.Log($"The following exception is preventing saving: {type.Name}");
         }
-
     }
 
     public GameData LoadData()
     {
         GameData data;
         Debug.Log(_jsonGameData);
-        if (!File.Exists(_jsonGameData))
-        {
-            Debug.LogWarning("No saved game data found creating new save game data...");
-            data = new GameData();
-            return data;
-        } 
-        else
+
+        try
         {
             using (StreamReader stream = new StreamReader(_jsonGameData))
             {
@@ -182,6 +179,14 @@ public class DataManager : MonoBehaviour
                 data = JsonUtility.FromJson<GameData>(jsonstring);
                 return data;
             }
+        }
+        catch (Exception ex)
+        {
+            Type type = ex.GetType();
+            Debug.Log($"The following exception is preventing loading: {type.Name}");
+            data = new GameData();
+            Debug.Log("Creating new GameData...");
+            return data;
         }
     }
 

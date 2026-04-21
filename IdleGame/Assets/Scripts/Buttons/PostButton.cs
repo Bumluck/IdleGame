@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using BreakInfinity;
+using System;
 public class PostButton : MonoBehaviour
 {
     #region VARIABLES
@@ -11,11 +12,14 @@ public class PostButton : MonoBehaviour
 
     public static PostButton Instance;
 
+    public event Action postButtonPressed;
+
     #endregion
 
     public void OnPostButtonPress()
     {
         ResourceManager.Instance.AddViews(buttonAdd * buttonMod);
+        postButtonPressed?.Invoke();
     }
 
     #region MONOBEHAVIOUR FUNCTIONS
