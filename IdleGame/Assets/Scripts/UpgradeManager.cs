@@ -124,9 +124,6 @@ public class UpgradeManager : MonoBehaviour, ISaveable
                 case ResourceType.Views:
                     resourceManager.AddViewModifier(upgradeList[_upgradeId].effect);
                     break;
-                case ResourceType.AdRev:
-                    //Nothing right now since adrev system is not in yet
-                    break;
                 default:
                     break;
             }
@@ -144,6 +141,7 @@ public class UpgradeManager : MonoBehaviour, ISaveable
         upgradeList[0].state = (UpgradeState)dataManager.data.teenState;
         upgradeList[1].state = (UpgradeState)dataManager.data.shortVidState;
         upgradeList[2].state = (UpgradeState)dataManager.data.smallAdState;
+        upgradeList[3].state = (UpgradeState)dataManager.data.cryptoBrosState;
 
         InitUnlockedUpgrades();
         doneLoading = true;
@@ -155,6 +153,7 @@ public class UpgradeManager : MonoBehaviour, ISaveable
         dataManager.data.teenState = (int)upgradeList[0].state;
         dataManager.data.shortVidState = (int)upgradeList[1].state;
         dataManager.data.smallAdState = (int)upgradeList[2].state;
+        dataManager.data.cryptoBrosState = (int)upgradeList[3].state;
     }
 
     #endregion

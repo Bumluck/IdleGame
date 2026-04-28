@@ -17,8 +17,7 @@ public enum ItemState
 public enum ResourceType
 {
     Views,
-    PostButton,
-    AdRev
+    PostButton
 }
 
 [System.Serializable]

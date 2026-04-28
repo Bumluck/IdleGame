@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BreakInfinity;
 using System;
-public class PostButton : MonoBehaviour
+public class PostButton : MonoBehaviour, ISaveable
 {
     #region VARIABLES
 
@@ -39,7 +39,7 @@ public class PostButton : MonoBehaviour
     private void Start()
     {
         dataManager = DataManager.Instance;
-        dataManager.postButton = this;
+        dataManager.saveableObjects.Add(this);
     }
 
     #endregion
@@ -54,7 +54,6 @@ public class PostButton : MonoBehaviour
     #endregion
 
     #region ISAVEABLE FUNCTIONS
-    /*
     public void LoadVariables()
     {
 
@@ -67,9 +66,8 @@ public class PostButton : MonoBehaviour
     {
 
         dataManager.data.buttonAdd = buttonAdd.ToString("F0");
-        dataManager.data.buttonMod = buttonMod.ToString();
+        dataManager.data.buttonMod = buttonMod.ToString("F0");
 
     }
-    */
     #endregion
 }

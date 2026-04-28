@@ -11,8 +11,11 @@ public class ShopManager : MonoBehaviour, ISaveable
 
     #region VARIABLES
 
+    [SerializeField] private GameObject itemButtonPrefab;
+    [SerializeField] private LayoutGroup shopLayoutGroup;
+
     public List<ItemData> itemList;
-    public List<Button> buttonList;
+    [SerializeField] private List<Button> buttonList;
     private DataManager dataManager;
     private ResourceManager resourceManager;
 
@@ -83,7 +86,7 @@ public class ShopManager : MonoBehaviour, ISaveable
         for (int i = 0; i < itemList.Count; i++)
         {
             CanvasGroup buttonCanGroup = buttonList[i].GetComponent<CanvasGroup>();
-            if ((itemList[i].state == ItemState.Locked && resourceManager.resourceList["views"] >= (itemList[i].cost * .25f) && i != 0) || (itemList[i].state == ItemState.Unlocked && buttonCanGroup.alpha != 1))
+            if ((itemList[i].state == ItemState.Locked && resourceManager.resourceList["views"] >= (itemList[i].cost * .65f) && i != 0) || (itemList[i].state == ItemState.Unlocked && buttonCanGroup.alpha != 1))
             {
                 itemList[i].state = ItemState.Unlocked;
 
@@ -97,12 +100,40 @@ public class ShopManager : MonoBehaviour, ISaveable
     {
         foreach(ItemData i in itemList)
         {
-            ItemButton currentButton = buttonList[itemList.IndexOf(i)].GetComponent<ItemButton>();
-            currentButton.itemTitle.text = i.itemTitle;
-            currentButton.itemDescription.text = i.itemDescription;
-            currentButton.itemAmount.text = i.amount.ToString("F0");
-            currentButton.itemCost.text = "Cost: " + i.cost.ToString("F0");
+            try
+            {
+                ItemButton currentButton = buttonList[itemList.IndexOf(i)].GetComponent<ItemButton>();
+                currentButton.itemTitle.text = i.itemTitle;
+                currentButton.itemDescription.text = i.itemDescription;
+                currentButton.itemAmount.text = i.amount.ToString("F0");
+                currentButton.itemCost.text = "Cost: " + i.cost.ToString("F0");
+            } 
+            catch
+            {
+                CreateItemButton(i);
+            }
         }
+    }
+
+    private void CreateItemButton(ItemData i)
+    {
+        GameObject currentButton = Instantiate(itemButtonPrefab, shopLayoutGroup.transform);
+        ItemButton itemData = currentButton.GetComponent<ItemButton>();
+
+        itemData.itemTitle.text = i.itemTitle;
+        itemData.itemDescription.text = i.itemDescription;
+        itemData.itemCost.text = "Cost: " + i.cost.ToString("F0");
+        itemData.itemAmount.text = i.amount.ToString("F0");
+
+        if (i.state == ItemState.Locked)
+        {
+            CanvasGroup buttonCanvasGroup = currentButton.GetComponent<CanvasGroup>();
+            buttonCanvasGroup.alpha = 0;
+        }
+
+        Button buttonToAdd = currentButton.GetComponent<Button>();
+
+        buttonList.Add(buttonToAdd);
     }
 
     #endregion
@@ -122,7 +153,9 @@ public class ShopManager : MonoBehaviour, ISaveable
         itemList[3].amount = BigDouble.Parse(dataManager.data.videogameAmount);
         itemList[3].cost = BigDouble.Parse(dataManager.data.videogameCost);
         itemList[3].state = (ItemState)dataManager.data.videogameUnlocked;
-
+        itemList[4].amount = BigDouble.Parse(dataManager.data.politicsAmount);
+        itemList[4].cost = BigDouble.Parse(dataManager.data.politicsCost);
+        itemList[4].state = (ItemState)dataManager.data.politicsUnlocked;
         InitializeData();
     }
 
@@ -139,6 +172,9 @@ public class ShopManager : MonoBehaviour, ISaveable
         dataManager.data.videogameAmount = itemList[3].amount.ToString("F0");
         dataManager.data.videogameCost = itemList[3].cost.ToString("F0");
         dataManager.data.videogameUnlocked = (int)itemList[3].state;
+        dataManager.data.politicsAmount = itemList[4].amount.ToString("F0");
+        dataManager.data.politicsCost = itemList[4].cost.ToString("F0");
+        dataManager.data.politicsUnlocked = (int)itemList[4].state;
     }
 
     public void InitializeData()

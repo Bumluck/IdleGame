@@ -163,5 +163,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   fadeTime: 2
-  fadeDistance: 25
+  fadeDistance: 50
   targetLocation: {x: 0, y: 0, z: 0}

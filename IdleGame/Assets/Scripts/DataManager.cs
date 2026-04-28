@@ -14,19 +14,6 @@ public interface ISaveable
     public void SaveVariables();
 }
 
-[Serializable]
-public struct PostButtonData
-{
-    public string buttonAdd;
-    public string buttonMod;
-
-    public PostButtonData(string _buttonAdd, string _buttonMod)
-    {
-        buttonAdd = _buttonAdd;
-        buttonMod = _buttonMod;
-    }
-}
-
 public class DataManager : MonoBehaviour
 {
     #region VARIABLES
@@ -38,8 +25,6 @@ public class DataManager : MonoBehaviour
     public GameData data;
 
     public List<ISaveable> saveableObjects;
-    //Separate postButton for XML data saving, all saveable objects will use Json
-    public PostButton postButton;
 
     private string _directoryPath;
 
@@ -60,7 +45,6 @@ public class DataManager : MonoBehaviour
         else
         {
             _directoryPath = Application.persistentDataPath + "/Player_Data/";
-            _xmlPostButtonPath = _directoryPath + "PostButtonData.xml";
             _jsonGameData = _directoryPath + "GameData.json";
             _playSessionDataPath = _directoryPath + "PlaySessions.txt";
 
@@ -105,8 +89,6 @@ public class DataManager : MonoBehaviour
         GetDataFromObjects();
         SaveData(data);
 
-        SavePostButtonData(postButton.buttonAdd.ToString("F0"), postButton.buttonMod.ToString("F0"));
-
         if (File.Exists(_playSessionDataPath))
         {
             File.AppendAllText(_playSessionDataPath, $"Session ended: {DateTime.Now}\n");
@@ -119,17 +101,12 @@ public class DataManager : MonoBehaviour
 
     private IEnumerator PassDataToObjects()
     {
-        yield return new WaitForSeconds(.1f);
-        Debug.Log(saveableObjects.Count);
+        yield return new WaitUntil(() => data != null);
         Debug.LogWarning("Beginning to pass data to objects...");
         foreach (ISaveable s in saveableObjects)
         {
             s.LoadVariables();
         }
-
-        PostButtonData dataFromDisk = LoadPostButtonData();
-        postButton.buttonAdd = BigDouble.Parse(dataFromDisk.buttonAdd);
-        postButton.buttonMod = float.Parse(dataFromDisk.buttonMod);
 
         yield return null;
     }
@@ -187,36 +164,6 @@ public class DataManager : MonoBehaviour
             data = new GameData();
             Debug.Log("Creating new GameData...");
             return data;
-        }
-    }
-
-    public PostButtonData LoadPostButtonData()
-    {
-        if (File.Exists(_xmlPostButtonPath))
-        {
-            var xmlSerializer = new XmlSerializer(typeof(PostButtonData));
-            using (FileStream stream = File.OpenRead(_xmlPostButtonPath))
-            {
-                var buttonData = (PostButtonData)xmlSerializer.Deserialize(stream);
-                return buttonData;
-            }
-        }
-        else
-        {
-            Debug.Log("Creating new PostButtonData struct with default values");
-            return new PostButtonData("1", "1");
-        }
-    }
-
-    public void SavePostButtonData(string _buttonAdd, string _buttonMod)
-    {
-        var xmlSerializer = new XmlSerializer(typeof(PostButtonData));
-
-        PostButtonData _currentPostButtonData = new PostButtonData(_buttonAdd,_buttonMod);
-
-        using (FileStream stream = File.Create(_xmlPostButtonPath))
-        {
-            xmlSerializer.Serialize(stream, _currentPostButtonData);
         }
     }
 

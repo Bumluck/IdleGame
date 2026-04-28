@@ -20,12 +20,6 @@ public class EffectManager : MonoBehaviour
         postButton.postButtonPressed += SpawnPostButtonAdd;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void SpawnPostButtonAdd()
     {
         AddViewEffect spawned = Instantiate(AddViewEffectPrefab,UI.transform).GetComponent<AddViewEffect>();

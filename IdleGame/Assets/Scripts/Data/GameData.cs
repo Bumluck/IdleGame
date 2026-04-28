@@ -26,11 +26,19 @@ public class GameData
     public string videogameAmount;
     public string videogameCost;
     public int videogameUnlocked;
+    public string politicsAmount;
+    public string politicsCost;
+    public int politicsUnlocked;
 
     //UpgradeManager
     public int teenState;
     public int shortVidState;
     public int smallAdState;
+    public int cryptoBrosState;
+
+    //Post Button
+    public string buttonAdd;
+    public string buttonMod;
 
     public GameData()
     {
@@ -54,13 +62,19 @@ public class GameData
         videogameAmount = "0";
         videogameCost = "50000";
         videogameUnlocked = 0;
+        politicsAmount = "0";
+        politicsCost = "100000";
+        politicsUnlocked = 0;
 
         //UpgradeManager
         teenState = 0;
         shortVidState = 0;
         smallAdState = 0;
+        cryptoBrosState = 0;
 
+        //Post Button
+        buttonAdd = "1";
+        buttonMod = "1";
     }
-
 
 }
