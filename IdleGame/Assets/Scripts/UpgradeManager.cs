@@ -61,19 +61,13 @@ public class UpgradeManager : MonoBehaviour, ISaveable
 
     public void UnlockUpgrades()
     {
-        bool buttonSpawned = false;
         for (int i = 0; i < upgradeList.Count; i++)
         {
             if (upgradeList[i].state == UpgradeState.Locked && resourceManager.resourceList["views"] >= (.25f * upgradeList[i].cost))
             {
                 upgradeList[i].state = UpgradeState.Available;
-
-                if (!buttonSpawned)
-                {
-                    buttonSpawned = true;
-                    CreateButton(i);
-                    Debug.Log("Button created through UnlockUpgrades()");
-                }
+                CreateButton(i);
+                Debug.Log("Button created through UnlockUpgrades()");
             }
         }
     }
@@ -108,7 +102,7 @@ public class UpgradeManager : MonoBehaviour, ISaveable
 
     #region PURCHASE UPGRADES
 
-    public void PurchaseUpgrade(int _upgradeId)
+    public void PurchaseUpgrade(int _upgradeId, GameObject buttonToDestroy)
     {
         if (resourceManager.resourceList["views"] >= upgradeList[_upgradeId].cost)
         {
@@ -128,7 +122,8 @@ public class UpgradeManager : MonoBehaviour, ISaveable
                     break;
             }
 
-            Destroy(buttonList[_upgradeId].gameObject);
+            Destroy(buttonToDestroy);
+            buttonList.TrimExcess();
         }
     }
 

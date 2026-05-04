@@ -31,7 +31,7 @@ public class UpgradeButton : MonoBehaviour
 
     public void BuyUpgrade()
     {
-        upgradeManager.PurchaseUpgrade(upgradeId);
+        upgradeManager.PurchaseUpgrade(upgradeId, this.gameObject);
     }
 
     #endregion
